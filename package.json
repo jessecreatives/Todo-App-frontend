@@ -1,6 +1,6 @@
 {
   "name": "todo",
-  "homepage": "https://handy-todo.herokuapp.com/",
+  "homepage": "https://handy-todo-frontend.herokuapp.com/",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:8000",
