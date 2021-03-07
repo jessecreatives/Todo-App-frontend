@@ -9,6 +9,8 @@ import {usePrevious} from './components/Todo';
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
+const URL = "https://handy-todo-backend.herokuapp.com/api/todos/"
+
 const FILTER_MAP = {
   All: () => true,
   Active: todo => !todo.completed,
@@ -30,7 +32,7 @@ function App() {
   // helper function
   const updateList = () => {
     axios
-      .get('http://localhost:8000/api/todos')
+      .get(URL)
       .then(res => setTodos(res.data))
       .catch(err => console.log(err));
   }
@@ -42,7 +44,7 @@ function App() {
 
   const addTask = (name) => {
     axios
-      .post('http://localhost:8000/api/todos/', {name})
+      .post(URL, {name})
       .then(res => updateList())
       .catch(err => console.log(err));
   }
@@ -51,21 +53,21 @@ function App() {
     const todo = todos.find(todo => todo.id === id);
     const currentCompleted = todo.completed;
     axios
-      .patch(`http://localhost:8000/api/todos/${id}/`, {completed: !currentCompleted})
+      .patch(`${URL}${id}/`, {completed: !currentCompleted})
       .then(res => updateList())
       .catch(err => console.log(err));
   }
 
   const handleOnClickDelete = (id) => {
     axios
-      .delete(`http://localhost:8000/api/todos/${id}`)
+      .delete(`${URL}${id}`)
       .then(res => updateList())
       .catch(err => console.log(err));
   }
 
   const handleOnClickSave = (id, newName) => {
     axios
-      .patch(`http://localhost:8000/api/todos/${id}/`, {name: newName})
+      .patch(`${URL}${id}/`, {name: newName})
       .then(res => updateList())
       .catch(err => console.log(err));
   }
