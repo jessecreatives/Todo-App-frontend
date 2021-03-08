@@ -1,9 +1,21 @@
 import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
+import {makeStyles} from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 import Todo from './components/Todo';
 import Form from './components/Form';
 import FilterButton from './components/FilterButton';
 import {usePrevious} from './components/Todo';
+
+const useStyles = makeStyles({
+  wrapper: {
+    width: "100%",
+    maxWidth: "65rem"
+  },
+  elevatioin12: {
+    boxShadow: "0px 7px 8px -4px rgb(0 0 0 / 12%), 0px 12px 17px 2px rgb(0 0 0 / 6%), 0px 5px 22px 4px rgb(0 0 0 / 6%)"
+  }
+});
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -20,6 +32,8 @@ const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 //=============App component================
 function App() {
+  const classes = useStyles();
+
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState('All');
 
@@ -81,7 +95,7 @@ function App() {
   }, [todos.length, prevTodosLength]);
 
   return (
-    <div className="todoapp stack-large">
+    <Paper elevation={12} className={`todoapp stack-large ${classes.wrapper} ${classes.elevatioin12}`}>
       <h1>HandyTodo</h1>
       <Form addTask={addTask} />
       <div className="filters btn-group stack-exception">
@@ -96,7 +110,7 @@ function App() {
       >
         {todos.filter(FILTER_MAP[filter]).map(todo => <Todo key={todo.id} id={todo.id} name={todo.name} completed={todo.completed} onCheckChange={handleOnCheckChange} onClickDelete={handleOnClickDelete} onClickSave={handleOnClickSave} />)}
       </ul>
-    </div>
+    </Paper>
   );
 }
 

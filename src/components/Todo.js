@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
@@ -38,13 +39,13 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
   }, [wasEditing, isEditing]);
 
   const editingTemplate = (
-    <form className="stack-small" onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label className="todo-label" htmlFor={id}>
-          New name for {name}
-        </label>
+    <Grid container className="stack-small" onSubmit={handleSubmit}>
+      <Grid item xs={9} className="c-cb">
         <input ref={editFieldRef} type="text" className="todo-text" id={id} value={input} onChange={(e) => setInput(e.target.value)} />
-      </div>
+      </Grid>
+      <Grid item xs={3}>
+
+      </Grid>
       <div className="btn-group">
         <IconButton aria-label="edit" color="success" type="submit">
           <DoneOutlinedIcon />
@@ -53,26 +54,26 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
           <ClearOutlinedIcon />
         </IconButton>
       </div>
-    </form>
+    </Grid>
   );
 
   const viewTemplate = (
-    <div className="stack-small">
-      <div className="c-cb">
+    <Grid container className="stack-small">
+      <Grid item xs={9} className="c-cb">
         <input id={id} type="checkbox" defaultChecked={completed} onChange={() => onCheckChange(id)} />
         <label className="todo-label" htmlFor={id}>
           {name}
         </label>
-      </div>
-      <div className="btn-group">
+      </Grid>
+      <Grid item xs={3} className="btn-group">
         <IconButton aria-label="edit" color="primary" ref={editButtonRef} onClick={() => setIsEditing(true)}>
-          <EditOutlinedIcon />
+          <EditOutlinedIcon fontSize="large" />
         </IconButton>
         <IconButton aria-label="delete" color="secondary" onClick={() => onClickDelete(id)}>
-          <DeleteOutlineOutlinedIcon />
+          <DeleteOutlineOutlinedIcon fontSize="large" />
         </IconButton>
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 
   return <li className="todo">{isEditing ? editingTemplate : viewTemplate}</li>;
