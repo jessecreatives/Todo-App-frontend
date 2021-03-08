@@ -1,10 +1,14 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
 
 const FilterButton = ({name, pressed, setFilter}) => (
-    <button type="button" className="btn toggle-btn" aria-pressed={pressed} onClick={() => setFilter(name)}>
-        <span className="visually-hidden">Show </span>
-        <span>{name}</span>
-        <span className="visually-hidden"> tasks</span>
-    </button>
+    <Button
+      key={name}
+      name={name}
+      pressed={pressed}
+      onClick={() => setFilter(name)}
+    >
+        {name}
+    </Button>
 );
 export default FilterButton;
