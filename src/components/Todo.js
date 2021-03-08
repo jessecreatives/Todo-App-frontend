@@ -1,4 +1,9 @@
 import React, {useState, useRef, useEffect} from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import DoneOutlinedIcon from '@material-ui/icons/DoneOutlined';
+import ClearOutlinedIcon from '@material-ui/icons/ClearOutlined';
 
 export const usePrevious = (value) => {
   const ref = useRef();
@@ -41,14 +46,12 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
         <input ref={editFieldRef} type="text" className="todo-text" id={id} value={input} onChange={(e) => setInput(e.target.value)} />
       </div>
       <div className="btn-group">
-        <button type="button" className="btn todo-cancel" onClick={() => setIsEditing(false)}>
-          Cancel 
-          <span className="visually-hidden">renaming {name}</span>
-        </button>
-        <button type="submit" className="btn btn__primary todo-edit">
-          Save
-          <span className="visually-hidden">New name for {name}</span>
-        </button>
+        <IconButton aria-label="edit" color="success" type="submit">
+          <DoneOutlinedIcon />
+        </IconButton>
+        <IconButton aria-label="delete" color="secondary" onClick={() => setIsEditing(false)}>
+          <ClearOutlinedIcon />
+        </IconButton>
       </div>
     </form>
   );
@@ -62,12 +65,12 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
         </label>
       </div>
       <div className="btn-group">
-        <button ref={editButtonRef} type="button" className="btn" onClick={() => setIsEditing(true)}>
-          Edit <span className="visually-hidden">{name}</span>
-        </button>
-        <button type="button" className="btn btn__danger" onClick={() => onClickDelete(id)}>
-          Delete <span className="visually-hidden">{name}</span>
-        </button>
+        <IconButton aria-label="edit" color="primary" ref={editButtonRef} onClick={() => setIsEditing(true)}>
+          <EditOutlinedIcon />
+        </IconButton>
+        <IconButton aria-label="delete" color="secondary" onClick={() => onClickDelete(id)}>
+          <DeleteOutlineOutlinedIcon />
+        </IconButton>
       </div>
     </div>
   );

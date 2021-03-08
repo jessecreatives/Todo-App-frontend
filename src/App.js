@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
-import {nanoid} from 'nanoid';
 import Todo from './components/Todo';
 import Form from './components/Form';
 import FilterButton from './components/FilterButton';
