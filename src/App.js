@@ -8,7 +8,6 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Paper from '@material-ui/core/Paper';
 import Todo from './components/Todo';
 import Modal from './components/Modal';
-import FilterButton from './components/FilterButton';
 import {usePrevious} from './components/Todo';
 
 const useStyles = makeStyles((theme) => ({
