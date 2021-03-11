@@ -1,0 +1,74 @@
+import React from 'react';
+import {createMuiTheme} from '@material-ui/core/styles';
+
+export const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: "#9a1750",
+            light: "#FCF0F3"
+        },
+        secondary: {
+            main: "#ee4c7c", // pink
+            light: "#ee4c7c",
+        },
+        background: {
+            default: "#9a1750"
+        }
+    },
+    shape: {
+        borderRadius: 100
+    },
+    typography: {
+        fontFamily: "'M PLUS 1p', sans-serif",
+        h1: {
+            fontSize: "3rem",
+            fontWeight: "700",
+        },
+        h2: {
+            fontSize: "1.2rem",
+            fontWeight: "700",
+        },
+        body1: {
+            fontSize: "1rem",
+        }
+    },
+    overrides: {
+        MuiToolbar: {
+            root: {
+                justifyContent: "space-between",
+            }
+        },
+        MuiContainer: {
+            root: {
+                paddingLeft: 0,
+                paddingRight: 0,
+            }
+        },
+        MuiIconButton: {
+            root: {
+                color: "#121212"
+            }
+        },
+        MuiPaper: {
+            elevation12: {
+                boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.15)",
+            }
+        },
+        MuiAccordion: {
+            root: {
+                boxShadow: "none",
+                borderBottom: "0.1rem solid rgba(0, 0, 0, 0.1)",
+            }
+        },
+        MuiButton: {
+            contained: {
+                padding: "0.6rem 2rem",
+            }
+        }
+    },
+    props: {
+        MuiPaper: {
+           
+        }
+    }
+});

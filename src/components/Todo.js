@@ -53,19 +53,18 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${name} accordion`}
       >
-      
         <CheckBox checked={completed} onChange={() => onCheckChange(id)} />
         <TextField ref={editFieldRef} id={id} value={input} onChange={(e) => setInput(e.target.value)} />
       </AccordionSummary>
-      <AccordionDetails onSubmit={handleSubmit}>
-        <Button aria-label="save" color="success" type="submit">保存</Button>
-        <Button aria-label="cancel" onClick={() => setIsEditing(false)}>キャンセル</Button>
+      <AccordionDetails onSubmit={handleSubmit} style={{flexDirection: "row", justifyContent: "space-between"}}>
+        <Button variant="contained" color="secondary" aria-label="save" type="submit" style={{width: "48%"}}>保存</Button>
+        <Button variant="contained" aria-label="cancel" onClick={() => setIsEditing(false)} style={{width: "48%", background: "#fff", border: "0.2rem solid #ee4c7c", color: "#ee4c7c"}}>キャンセル</Button>
       </AccordionDetails>
     </Accordion>
 );
 
   const viewTemplate = (
-    <Accordion>
+    <Accordion style={{borderRadius: 0}}>
       <AccordionSummary>
         <FormControlLabel 
           aria-label={name}
@@ -75,9 +74,9 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
           label={name}
         />
       </AccordionSummary>
-      <AccordionDetails onSubmit={handleSubmit}>
-        <Button aria-label="edit" color="primary" ref={editButtonRef} onClick={() => setIsEditing(true)}>編集</Button>
-        <Button aria-label="delete" onClick={() => onClickDelete(id)}>削除</Button>
+      <AccordionDetails style={{flexDirection: "row", justifyContent: "space-between"}}>
+        <Button variant="contained" aria-label="edit" color="secondary" ref={editButtonRef} onClick={() => setIsEditing(true)} style={{width: "48%"}}>編集</Button>
+        <Button variant="contained" aria-label="delete" onClick={() => onClickDelete(id)} style={{width: "48%", background: "#fff", border: "0.2rem solid #ee4c7c", color: "#ee4c7c"}}>削除</Button>
       </AccordionDetails>
     </Accordion>
   );
