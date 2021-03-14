@@ -67,21 +67,24 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
       <AccordionSummary 
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${name} accordion`}
+        style={{marginBottom: 0}}
       >
         <FormControlLabel 
           aria-label={name}
           onClick={(e) => e.stopPropagation()}
           onFocus={(e) => e.stopPropagation()}
           control={<CheckBox checked={completed} onChange={() => onCheckChange(id)} />}
+          style={{marginRight: 0}}
         />
         <FormControlLabel 
           aria-label={name}
           onClick={(e) => e.stopPropagation()}
           onFocus={(e) => e.stopPropagation()}
           control={<Input ref={editFieldRef} id={id} value={input} onChange={(e) => setInput(e.target.value)} />}
+          style={{margin: 0}}
         />
       </AccordionSummary>
-      <AccordionDetails onSubmit={handleSubmit}>
+      <AccordionDetails onSubmit={handleSubmit} style={{marginBottom: "1.2rem"}}>
         <form onSubmit={handleSubmit} style={{width: "100%", borderRadius: 0, display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
           <Button variant="contained" color="secondary" aria-label="save" type="submit" style={{width: "48%"}}>保存</Button>
           <Button variant="outlined" color="secondary" aria-label="cancel" onClick={handleCancel} style={{width: "48%", borderWidth: "0.2rem"}}>キャンセル</Button>
@@ -99,6 +102,7 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
           onFocus={(e) => e.stopPropagation()}
           control={<CheckBox checked={completed} onChange={() => onCheckChange(id)} />}
           label={name}
+          style={{marginRight: 0}}
         />
       </AccordionSummary>
       <AccordionDetails style={{borderRadius: 0, flexDirection: "row", justifyContent: "space-between"}}>

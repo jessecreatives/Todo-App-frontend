@@ -25,14 +25,10 @@ const NewTodoModal = ({addTodo, closeModal, isOpen}) => {
         closeModal();
     }
 
-    const handleCancel = () => {
-        closeModal();
-    }
-
     return (
         <Modal open={isOpen}>
             <Paper style={{borderRadius: "1rem", padding: theme.spacing(4), margin: theme.spacing(4), marginTop: theme.spacing(8)}}>
-                <IconButton style={{position: "absolute", top: "0.5rem", right: "0.5rem", color: "#fff"}} onClick={handleCancel}>
+                <IconButton style={{position: "absolute", top: "0.5rem", right: "0.5rem", color: "#fff"}} onClick={closeModal}>
                     <CloseIcon style={{fontSize: "2rem"}} />
                 </IconButton>
                 <form onSubmit={handleSubmit}>

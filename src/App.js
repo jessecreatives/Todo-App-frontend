@@ -19,12 +19,7 @@ import {usePrevious} from './components/Todo';
 import {theme} from './styles/Theme';
 import Todo from './components/Todo';
 import NewTodoModal from './components/NewTodoModal';
-
-const useStyles = makeStyles({
-  hero: {
-    background: theme.palette.primary.main
-  }
-});
+import TodoList from './components/TodoList';
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -40,17 +35,48 @@ const FILTER_MAP = {
 const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 const tabProps = (index) => ({
-  id: `tab-${index}`,
+  id: index,
   'aria-controls': `tab-${index}`
 });
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Box
+      role="tabpanel"
+      hidden={value !== index}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <List>{children}</List>
+      )}
+    </Box>
+  );
+}
+
 //=============App component================
 function App() {
-  const classes = useStyles();
-
   const [todos, setTodos] = useState([]);
-  const [filter, setFilter] = useState('全て');
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [filter, setFilter] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [lists, setLists] = useState([
+    {
+      id: 1,
+      name: '生活リスト',
+    },
+    {
+      id: 2,
+      name: '仕事関係',
+    },
+    {
+      id: 3,
+      name: '読みたい本'
+    }
+  ]);
+  const [isListOpen, setIsListOpen] = useState(false);
 
   // get data
   useEffect(() => {
@@ -96,7 +122,16 @@ function App() {
   }
 
   const handleOnFilterChange = (e, newIndex) => {
-    setFilter(FILTER_NAMES[newIndex]);
+    setFilter(newIndex);
+  }
+
+  const openList = () => {
+    setIsListOpen(true);
+  }
+
+  const closeList = e => {
+    e.preventDefault();
+    setIsListOpen(false);
   }
 
   const listHeadingRef = useRef(null);
@@ -111,6 +146,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       {isModalOpen && <NewTodoModal addTodo={addTodo} closeModal={() => setIsModalOpen(false)} isOpen={isModalOpen}/>}
+      {isListOpen && <TodoList isListOpen={isListOpen} lists={lists} closeList={closeList} />}
       <Container style={{position: "relative", paddingBottom: "8rem", minHeight: "100vh"}}>
         <AppBar position="absolute" color="transparent" elevation={0}>
           <Toolbar>
@@ -121,66 +157,73 @@ function App() {
                 </g>
             </SvgIcon>
             <Typography variant="h2" style={{color: "#fff"}}>生活リスト</Typography>
-            <IconButton style={{color: "#fff"}}>
+            <IconButton style={{color: "#fff"}} onClick={openList}>
               <MenuIcon />
             </IconButton>
           </Toolbar>
         </AppBar>
 
         {/* hero */}
-        <Container className={classes.hero} style={{padding: "4rem"}}>
+        <Box style={{position: "relative", background: theme.palette.primary.main, padding: "4rem"}}>
           <img src="../hero.svg" alt="hero" style={{width: "100%", maxWidth: "37.5rem", margin: "0 auto"}} />
-        </Container>
-
         {/* data unit */}
-        <Paper elevation={12} style={{borderRadius: 30, paddingTop: theme.spacing(2), paddingBottom: theme.spacing(2), marginLeft: theme.spacing(2), marginRight: theme.spacing(2), display: "flex", flexDirection: "row", justifyContent: "space-between", position: "relative", transform: "translateY(-50%)"}} >
-            <Box position="relative" style={{width: "calc(100% / 3)", textAlign: "center"}}>
-              <Typography variant="body2">
-                <Box component="span" style={{fontSize: "1.8rem", fontWeight: "700", marginRight: theme.spacing(1)}}>{todos.filter(todo => todo.completed === false).length}</Box>
-                件
-              </Typography>
-              <Typography variant="body2">
-                未完了
-              </Typography>
-              <Box variant="span" style={{display: "block", width: "0.1rem", height: "100%", background: "rgba(0, 0, 0, 0.12", position: "absolute", top: 0, right: 0}}></Box>
-            </Box>
-            <Box position="relative"  style={{width: "calc(100% / 3)", textAlign: "center"}}>
-              <Typography variant="body2">
-                <Box component="span" style={{fontSize: "1.8rem", fontWeight: "700", marginRight: theme.spacing(1)}}>{todos.filter(todo => todo.completed === true).length}</Box>
-                件
-              </Typography>
-              <Typography variant="body2">
-                完了
-              </Typography>
-              <Box variant="span" style={{display: "block", width: "0.1rem", height: "100%", background: "rgba(0, 0, 0, 0.12", position: "absolute", top: 0, right: 0}}></Box>
-            </Box>
-            <Box style={{width: "calc(100% / 3)", textAlign: "center"}}>
-              <Typography variant="body2">
-                <Box component="span" style={{fontSize: "1.8rem", fontWeight: "700", marginRight: theme.spacing(1)}}>{todos.filter(todo => todo.completed === true).length / todos.length * 100}</Box>
-                %
-              </Typography>
-              <Typography variant="body2">
-                達成率
-              </Typography>
-            </Box>
-        </Paper>
+          <Paper elevation={12} style={{borderRadius: 30, width: "80%", maxWidth: "40rem", position: "absolute", left: "50%", bottom: 0, transform: "translate(-50%, 50%)", margin: "0", paddingTop: theme.spacing(2), paddingBottom: theme.spacing(2), display: "flex", flexDirection: "row", justifyContent: "space-between"}} >
+              <Box position="relative" style={{width: "calc(100% / 3)", textAlign: "center"}}>
+                <Typography variant="body2">
+                  <Box component="span" style={{fontSize: "1.8rem", fontWeight: "700", marginRight: theme.spacing(1)}}>{todos.filter(todo => todo.completed === false).length}</Box>
+                  件
+                </Typography>
+                <Typography variant="body2">
+                  未完了
+                </Typography>
+                <Box variant="span" style={{display: "block", width: "0.1rem", height: "100%", background: "rgba(0, 0, 0, 0.12", position: "absolute", top: 0, right: 0}}></Box>
+              </Box>
+              <Box position="relative"  style={{width: "calc(100% / 3)", textAlign: "center"}}>
+                <Typography variant="body2">
+                  <Box component="span" style={{fontSize: "1.8rem", fontWeight: "700", marginRight: theme.spacing(1)}}>{todos.filter(todo => todo.completed === true).length}</Box>
+                  件
+                </Typography>
+                <Typography variant="body2">
+                  完了
+                </Typography>
+                <Box variant="span" style={{display: "block", width: "0.1rem", height: "100%", background: "rgba(0, 0, 0, 0.12", position: "absolute", top: 0, right: 0}}></Box>
+              </Box>
+              <Box style={{width: "calc(100% / 3)", textAlign: "center"}}>
+                <Typography variant="body2">
+                  <Box component="span" style={{fontSize: "1.8rem", fontWeight: "700", marginRight: theme.spacing(1)}}>{(todos.filter(todo => todo.completed === true).length / todos.length * 100).toFixed(1)}</Box>
+                  %
+                </Typography>
+                <Typography variant="body2">
+                  達成率
+                </Typography>
+              </Box>
+          </Paper>
+        </Box>
 
         {/* tabs */}
-        <Tabs value={filter} onChange={handleOnFilterChange} centered>
+        <Tabs value={filter} onChange={handleOnFilterChange} centered style={{paddingTop: "6rem", marginBottom: theme.spacing(4), background: "#fff4f7"}}>
           {FILTER_NAMES.map((name, i) => (
-            <Tab key={name} label={name} {...tabProps(i)} />
+            <Tab ref={listHeadingRef} key={name} label={name} {...tabProps(i)} />
           ))}
         </Tabs>
-
-        {/* Todo list */}
-        <List ref={listHeadingRef}>
-          {todos.filter(FILTER_MAP[filter]).map(todo =>
+        <TabPanel value={filter} index={0}>
+          {todos.map(todo =>
             <Todo key={todo.id} id={todo.id} name={todo.name} completed={todo.completed} onCheckChange={handleOnCheckChange} onClickDelete={handleOnClickDelete} onClickSave={handleOnClickSave} />
-          )}
-        </List>
+        )}
+        </TabPanel>
+        <TabPanel value={filter} index={1}>
+        {todos.filter(todo => !todo.completed).map(todo =>
+          <Todo key={todo.id} id={todo.id} name={todo.name} completed={todo.completed} onCheckChange={handleOnCheckChange} onClickDelete={handleOnClickDelete} onClickSave={handleOnClickSave} />
+        )}
+        </TabPanel>
+        <TabPanel value={filter} index={2}>
+        {todos.filter(todo => todo.completed).map(todo =>
+          <Todo key={todo.id} id={todo.id} name={todo.name} completed={todo.completed} onCheckChange={handleOnCheckChange} onClickDelete={handleOnClickDelete} onClickSave={handleOnClickSave} />
+        )}
+        </TabPanel>
 
         {/* open modal button */}
-        <Fab color="secondary" aria-label="add" onClick={() => setIsModalOpen(true)} style={{position: "absolute", bottom: "1.6rem", right: "1.6rem"}}>
+        <Fab color="secondary" aria-label="add" onClick={() => setIsModalOpen(true)} style={{position: "absolute", bottom: "2rem", right: "1.6rem"}}>
           <AddIcon />
         </Fab>
 

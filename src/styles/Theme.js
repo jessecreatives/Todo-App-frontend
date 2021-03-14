@@ -45,7 +45,11 @@ export const theme = createMuiTheme({
         },
         MuiIconButton: {
             root: {
-                color: "#121212"
+                color: "#121212",
+                padding: 0
+            },
+            edgeEnd: {
+                marginRight: 0,
             }
         },
         MuiPaper: {
@@ -57,6 +61,17 @@ export const theme = createMuiTheme({
             root: {
                 boxShadow: "none",
                 borderBottom: "0.1rem solid rgba(0, 0, 0, 0.1)",
+                "&$expanded": {
+                    marginBottom: 0
+                }
+            },
+        },
+        MuiAccordionSummary: {
+        },
+        MuiAccordionDetails: {
+            root: {
+                paddingLeft: 0,
+                paddingRight: 0
             }
         },
         MuiButton: {
@@ -66,7 +81,7 @@ export const theme = createMuiTheme({
         },
         MuiTabs: {
             indicator: {
-                width: "30px!important",
+                // width: "30px!important",
             }
         },
         MuiTab: {
@@ -74,11 +89,6 @@ export const theme = createMuiTheme({
                 paddingLeft: "2rem",
                 paddingRight: "2rem",
             }
-        }
-    },
-    props: {
-        MuiPaper: {
-           
-        }
+        },
     }
 });
