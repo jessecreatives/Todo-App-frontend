@@ -61,6 +61,7 @@ export const theme = createMuiTheme({
             root: {
                 boxShadow: "none",
                 borderBottom: "0.1rem solid rgba(0, 0, 0, 0.1)",
+                borderRadius: "0!important",
                 "&$expanded": {
                     marginBottom: 0
                 }
