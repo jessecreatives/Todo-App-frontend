@@ -1,4 +1,3 @@
-import React from 'react';
 import {createMuiTheme} from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({
@@ -63,6 +62,17 @@ export const theme = createMuiTheme({
         MuiButton: {
             contained: {
                 padding: "0.6rem 2rem",
+            }
+        },
+        MuiTabs: {
+            indicator: {
+                width: "30px!important",
+            }
+        },
+        MuiTab: {
+            root: {
+                paddingLeft: "2rem",
+                paddingRight: "2rem",
             }
         }
     },

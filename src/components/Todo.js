@@ -1,11 +1,15 @@
 import React, {useState, useRef, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import Box from '@material-ui/core/Box';
+import Input from '@material-ui/core/Input';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DoneOutlinedIcon from '@material-ui/icons/DoneOutlined';
 import ClearOutlinedIcon from '@material-ui/icons/ClearOutlined';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -29,6 +33,7 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
 
   const [isEditing, setIsEditing] = useState(false);
   const [input, setInput] = useState(name);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const wasEditing = usePrevious(isEditing);
 
@@ -36,6 +41,16 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
     e.preventDefault();
     onClickSave(id, input);
     setIsEditing(false);
+    handleExpansion(id)(false);
+  }
+
+  const handleExpansion = (id) => (e, isExpanded) => {
+    setIsExpanded(isExpanded ? id : false);
+  }
+
+  const handleCancel = e => {
+    setIsEditing(false);
+    handleExpansion(id)(false);
   }
 
   useEffect(() => {
@@ -48,24 +63,36 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
   }, [wasEditing, isEditing]);
 
   const editingTemplate = (
-    <Accordion>
+    <Accordion expanded={isExpanded === id} onChange={handleExpansion(id)}>
       <AccordionSummary 
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${name} accordion`}
       >
-        <CheckBox checked={completed} onChange={() => onCheckChange(id)} />
-        <TextField ref={editFieldRef} id={id} value={input} onChange={(e) => setInput(e.target.value)} />
+        <FormControlLabel 
+          aria-label={name}
+          onClick={(e) => e.stopPropagation()}
+          onFocus={(e) => e.stopPropagation()}
+          control={<CheckBox checked={completed} onChange={() => onCheckChange(id)} />}
+        />
+        <FormControlLabel 
+          aria-label={name}
+          onClick={(e) => e.stopPropagation()}
+          onFocus={(e) => e.stopPropagation()}
+          control={<Input ref={editFieldRef} id={id} value={input} onChange={(e) => setInput(e.target.value)} />}
+        />
       </AccordionSummary>
-      <AccordionDetails onSubmit={handleSubmit} style={{flexDirection: "row", justifyContent: "space-between"}}>
-        <Button variant="contained" color="secondary" aria-label="save" type="submit" style={{width: "48%"}}>保存</Button>
-        <Button variant="contained" aria-label="cancel" onClick={() => setIsEditing(false)} style={{width: "48%", background: "#fff", border: "0.2rem solid #ee4c7c", color: "#ee4c7c"}}>キャンセル</Button>
+      <AccordionDetails onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{width: "100%", borderRadius: 0, display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+          <Button variant="contained" color="secondary" aria-label="save" type="submit" style={{width: "48%"}}>保存</Button>
+          <Button variant="outlined" color="secondary" aria-label="cancel" onClick={handleCancel} style={{width: "48%", borderWidth: "0.2rem"}}>キャンセル</Button>
+        </form>
       </AccordionDetails>
     </Accordion>
 );
 
   const viewTemplate = (
-    <Accordion style={{borderRadius: 0}}>
-      <AccordionSummary>
+    <Accordion style={{borderRadius: 0}} expanded={isExpanded === id} onChange={handleExpansion(id)}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <FormControlLabel 
           aria-label={name}
           onClick={(e) => e.stopPropagation()}
@@ -74,9 +101,9 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
           label={name}
         />
       </AccordionSummary>
-      <AccordionDetails style={{flexDirection: "row", justifyContent: "space-between"}}>
+      <AccordionDetails style={{borderRadius: 0, flexDirection: "row", justifyContent: "space-between"}}>
         <Button variant="contained" aria-label="edit" color="secondary" ref={editButtonRef} onClick={() => setIsEditing(true)} style={{width: "48%"}}>編集</Button>
-        <Button variant="contained" aria-label="delete" onClick={() => onClickDelete(id)} style={{width: "48%", background: "#fff", border: "0.2rem solid #ee4c7c", color: "#ee4c7c"}}>削除</Button>
+        <Button variant="outlined" color="secondary" aria-label="delete" onClick={() => onClickDelete(id)} style={{width: "48%", borderWidth: "0.2rem"}}>削除</Button>
       </AccordionDetails>
     </Accordion>
   );

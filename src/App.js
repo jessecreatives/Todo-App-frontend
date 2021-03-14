@@ -129,11 +129,11 @@ function App() {
 
         {/* hero */}
         <Container className={classes.hero} style={{padding: "4rem"}}>
-          <img src="../hero.svg" alt="hero image" style={{width: "100%", maxWidth: "37.5rem", margin: "0 auto"}} />
+          <img src="../hero.svg" alt="hero" style={{width: "100%", maxWidth: "37.5rem", margin: "0 auto"}} />
         </Container>
 
         {/* data unit */}
-        <Paper elevation={12} style={{paddingTop: theme.spacing(2), paddingBottom: theme.spacing(2), paddingLeft: theme.spacing(4), paddingRight: theme.spacing(4), marginLeft: theme.spacing(2), marginRight: theme.spacing(2), display: "flex", flexDirection: "row", justifyContent: "space-between", position: "relative", transform: "translateY(-50%)"}} >
+        <Paper elevation={12} style={{borderRadius: 30, paddingTop: theme.spacing(2), paddingBottom: theme.spacing(2), marginLeft: theme.spacing(2), marginRight: theme.spacing(2), display: "flex", flexDirection: "row", justifyContent: "space-between", position: "relative", transform: "translateY(-50%)"}} >
             <Box position="relative" style={{width: "calc(100% / 3)", textAlign: "center"}}>
               <Typography variant="body2">
                 <Box component="span" style={{fontSize: "1.8rem", fontWeight: "700", marginRight: theme.spacing(1)}}>{todos.filter(todo => todo.completed === false).length}</Box>
@@ -156,7 +156,7 @@ function App() {
             </Box>
             <Box style={{width: "calc(100% / 3)", textAlign: "center"}}>
               <Typography variant="body2">
-                <Box component="span" style={{fontSize: "1.8rem", fontWeight: "700", marginRight: theme.spacing(1)}}>{todos.filter(todo => todo.completed === true).length / todos.length}</Box>
+                <Box component="span" style={{fontSize: "1.8rem", fontWeight: "700", marginRight: theme.spacing(1)}}>{todos.filter(todo => todo.completed === true).length / todos.length * 100}</Box>
                 %
               </Typography>
               <Typography variant="body2">

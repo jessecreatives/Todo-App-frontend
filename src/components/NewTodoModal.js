@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,12 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import CloseIcon from '@material-ui/icons/Close';
 import {theme} from '../styles/Theme';
 
-const useStyles = makeStyles((theme) => ({
-    
-}));
-
 const NewTodoModal = ({addTodo, closeModal, isOpen}) => {
-    const classes = useStyles();
 
     const [input, setInput] = useState('');
 
@@ -43,12 +37,12 @@ const NewTodoModal = ({addTodo, closeModal, isOpen}) => {
                 </IconButton>
                 <form onSubmit={handleSubmit}>
                     <Typography variant="h2" align="center" style={{marginBottom: theme.spacing(2)}}>何をする予定ですか？</Typography>
-                    <FormControl fullWidth style={{marginBottom: theme.spacing(2)}}>
+                    <FormControl fullWidth style={{marginBottom: theme.spacing(4)}}>
                         <InputLabel htmlFor="new-todo">新タスク</InputLabel>
                         <Input id="new-todo" aria-describedby="new-todo" value={input}
                         onChange={handleChange} />
                     </FormControl>
-                    <Button variant="contained" type="submit" fullWidth color="primary">追加</Button>
+                    <Button variant="contained" type="submit" fullWidth color="secondary">追加</Button>
                 </form>
             </Paper>
         </Modal>
