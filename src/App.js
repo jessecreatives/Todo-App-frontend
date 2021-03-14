@@ -146,8 +146,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       {isModalOpen && <NewTodoModal addTodo={addTodo} closeModal={() => setIsModalOpen(false)} isOpen={isModalOpen}/>}
-      {isListOpen && <TodoList isListOpen={isListOpen} lists={lists} closeList={closeList} />}
       <Container style={{position: "relative", paddingBottom: "8rem", minHeight: "100vh"}}>
+        {isListOpen && <TodoList isListOpen={isListOpen} lists={lists} closeList={closeList} />}
         <AppBar position="absolute" color="transparent" elevation={0}>
           <Toolbar>
             <SvgIcon>
