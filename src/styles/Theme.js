@@ -39,10 +39,16 @@ export const theme = createMuiTheme({
         },
         MuiContainer: {
             root: {
+<<<<<<< HEAD
                 maxWidth: "600px!important",
                 paddingLeft: "0!important",
                 paddingRight: "0!important",
             },
+=======
+                paddingLeft: 0,
+                paddingRight: 0,
+            }
+>>>>>>> cac1bb731b28f03f2f4ce9bfc21ee51922a3c595
         },
         MuiIconButton: {
             root: {
@@ -62,7 +68,10 @@ export const theme = createMuiTheme({
             root: {
                 boxShadow: "none",
                 borderBottom: "0.1rem solid rgba(0, 0, 0, 0.1)",
+<<<<<<< HEAD
                 borderRadius: "0!important",
+=======
+>>>>>>> cac1bb731b28f03f2f4ce9bfc21ee51922a3c595
                 "&$expanded": {
                     marginBottom: 0
                 }

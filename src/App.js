@@ -146,8 +146,13 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       {isModalOpen && <NewTodoModal addTodo={addTodo} closeModal={() => setIsModalOpen(false)} isOpen={isModalOpen}/>}
+<<<<<<< HEAD
       <Container style={{position: "relative", paddingBottom: "8rem", minHeight: "100vh"}}>
         {isListOpen && <TodoList isListOpen={isListOpen} lists={lists} closeList={closeList} />}
+=======
+      {isListOpen && <TodoList isListOpen={isListOpen} lists={lists} closeList={closeList} />}
+      <Container style={{position: "relative", paddingBottom: "8rem", minHeight: "100vh"}}>
+>>>>>>> cac1bb731b28f03f2f4ce9bfc21ee51922a3c595
         <AppBar position="absolute" color="transparent" elevation={0}>
           <Toolbar>
             <SvgIcon>

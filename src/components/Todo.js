@@ -15,7 +15,11 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+<<<<<<< HEAD
 import Checkbox from '@material-ui/core/Checkbox';
+=======
+import CheckBox from '@material-ui/core/CheckBox';
+>>>>>>> cac1bb731b28f03f2f4ce9bfc21ee51922a3c595
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 
@@ -73,7 +77,11 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
           aria-label={name}
           onClick={(e) => e.stopPropagation()}
           onFocus={(e) => e.stopPropagation()}
+<<<<<<< HEAD
           control={<Checkbox checked={completed} onChange={() => onCheckChange(id)} />}
+=======
+          control={<CheckBox checked={completed} onChange={() => onCheckChange(id)} />}
+>>>>>>> cac1bb731b28f03f2f4ce9bfc21ee51922a3c595
           style={{marginRight: 0}}
         />
         <FormControlLabel 
@@ -100,7 +108,11 @@ export default function Todo({id, name, completed, onCheckChange, onClickDelete,
           aria-label={name}
           onClick={(e) => e.stopPropagation()}
           onFocus={(e) => e.stopPropagation()}
+<<<<<<< HEAD
           control={<Checkbox checked={completed} onChange={() => onCheckChange(id)} />}
+=======
+          control={<CheckBox checked={completed} onChange={() => onCheckChange(id)} />}
+>>>>>>> cac1bb731b28f03f2f4ce9bfc21ee51922a3c595
           label={name}
           style={{marginRight: 0}}
         />
